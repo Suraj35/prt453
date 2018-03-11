@@ -1,0 +1,115 @@
+﻿@using PagedList.Mvc 
+@model PagedList.IPagedList<EventsViewModels>
+@{
+    ViewBag.Title = "Events";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-12">
+
+    <div class="card">
+        <div class="card-header m-b-md">
+            <h5 class="card-header-text">Events List</h5>
+            <a href="/Events/Detail" class="btn btn-sm btn-primary pull-right"><i class="fa fa-plus"></i> Add Event</a>
+        </div>
+        <div class="card-block">
+            @if (Model != null && Model.Count() > 0)
+            {
+                <table class="table table-hover snap-primary-table">
+                    <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Sport Name</th>
+                            <th>Venue Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            @Html.HiddenFor(model => item.EventId)
+                            <tr>
+                                <td>@item.EventName</td>
+                                <td>@item.SportName</td>
+                                <td>@item.VenueName</td>
+                                <td>@item.StartDate.ToShortDateString()</td>
+                                <td>@item.EndDate.ToShortDateString()</td>
+
+                                @if (item.UserId == WebApp.HelperClass.Common.CurrentUser.Id)
+                                {
+                                    <td>
+                                        <a class="grid_action" href="@Url.Action("Detail", "Events", new { id = item.EventId })" title="Edit"><i class="fa fa-pencil"></i></a>|
+                                        <a class="grid_action" href="@Url.Action("ChallengeUsers", "Events", new { id = item.EventId })" data-toggle="modal" data-target="#modal-container" title="Challenge Opponents"><i class="fa fa-bullhorn"></i> </a>|
+                                        <a class="grid_action" href="@Url.Action("Delete", "Events", new { id = item.EventId })" onclick="return confirm('Are you sure you want to delete?');" title="Delete"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    if (!item.IsFree && item.TotalBoughtTickets < item.TotalTickets)
+                                    {
+                                        if (item.IsTicketPurchased)
+                                        {
+                                            <td>
+                                                <a class="grid_action" href="#" title="Ticket Bought Already"><i class="fa fa-shopping-cart"></i></a>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <a class="grid_action" href="@Url.Action("Buy", "Tickets", new { id = item.EventId })" data-toggle="modal" title="Buy Ticket"><i class="fa fa-ticket"></i></a>
+                                            </td>
+                                        }
+
+                                    }
+                                    else if (!item.IsFree && item.TotalBoughtTickets >= item.TotalTickets)
+                                    {
+                                        <td>
+                                            <a class="grid_action" href="#" title="Sold Out"><i class="fa fa-gavel"></i></a>
+                                        </td>
+                                    }
+                                    else if (item.IsFree)
+                                    {
+                                        <td>
+                                            <a class="grid_action" href="#" title="Free"><i class="fa fa-sign-in"></i></a>
+                                        </td>
+                                    }
+                                }
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div id="pager" class="text-right">
+                    <p> Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</p>
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*<div class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+        </div>
+    </div>
+</div>
+
+<script>
+        $(function () {
+            $('#modal-container').on('shown.modal', function () {
+                alert('hiin');
+            });
+        });
+        $('#modal-container').on('shown.modal', function () {
+            alert('hiout');
+        });
+        $('#modal-container').on('hidden.modal', function () {
+            alert('bye');
+        });
+
+    </script>*@

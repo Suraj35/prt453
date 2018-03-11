@@ -1,0 +1,43 @@
+﻿@model ChallengeEvent
+
+@{
+    ViewBag.Title = "Challenge Others";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <h3 class="modal-title">Challenge</h3>
+</div>
+@using (Html.BeginForm("Challenge", "Events", System.Web.Mvc.FormMethod.Post))
+{
+    <div class="modal-body">
+        <div class="errormsg">
+
+        </div>
+        @Html.HiddenFor(h => h.EventId)
+        <div class="row">
+            <div role="form" class="form-horizontal">
+
+                <div class="form-group">
+                    <lable class="control-label col-sm-12">Press Ctrl and select the opponents for <b>@Model.EventName</b> Event.</lable><br />
+                    <div class="col-sm-12">
+                        @if (Model.ToChallengeList != null && Model.ToChallengeList.Count() > 0)
+                        {
+                            @Html.ListBox("SelectedIds", new MultiSelectList(Model.ToChallengeList, "Id", "Name"), new { @class = "form-control" })
+                        }
+                        else
+                        {
+                            <p class="alert alert-danger" style="text-align: -webkit-center;">No User to Challenge</p>
+                        }
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" value="Create" class="btn btn-primary btn-sm">Save</button>
+        <input type="button" value="Close" data-dismiss="modal" class="btn btn-white btn-sm">
+    </div>
+}

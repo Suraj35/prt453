@@ -1,0 +1,92 @@
+﻿@model TicketViewModels
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header m-b-md">
+        <h5>Ticket</h5>
+    </div>
+    <div class="card-block">
+        <div id="dvprint">
+            <h4>Detail</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.EventName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EventName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CardNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CardNumber)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+
+            </dl>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" onclick="PrintElem();" value="Print" class="btn btn-primary" />
+                <a class="btn btn-default" href="/Events">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function PrintElem() {
+        var mywindow = window.open('', 'PRINT', 'height=600,width=600');
+
+        mywindow.document.write('<html><head><title>Ticket</title>');
+        mywindow.document.write('</head><body style="height:500px; width:400px" >');
+        mywindow.document.write(document.getElementById('dvprint').innerHTML);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+
+        mywindow.print();
+        mywindow.close();
+
+        return true;
+    }
+</script>

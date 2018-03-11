@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Home" controller="Events" action="Index">
+    <mvcSiteMapNode title="Add/Update Event" controller="Events" action="Detail" preservedRouteParameters="id"/>
+    <mvcSiteMapNode title="Profile" controller="User" action="EditProfile"/>
+    <mvcSiteMapNode title="Venue" controller="Venue" action="Index">
+      <mvcSiteMapNode title="Add Venue" controller="Venue" action="Detail"/>
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Sports" controller="Sports" action="Index">
+      <mvcSiteMapNode title="Add Sport" controller="Sports" action="Detail"/>
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Users" controller="User" action="Index"/>
+    <mvcSiteMapNode title="Buy Ticket" controller="Tickets" action="Buy" preservedRouteParameters="id"/>
+    <mvcSiteMapNode title="Event Detail" controller="Events" action="Info" preservedRouteParameters="id"/>
+  </mvcSiteMapNode>
+
+</mvcSiteMap>

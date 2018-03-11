@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sports Management</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Phoenixcoded">
+    <meta name="keywords"
+          content=", Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+    <meta name="author" content="Phoenixcoded">
+
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="/Content/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="/Content/images/favicon2.ico" type="image/x-icon">
+
+    <!-- Google font-->
+    <link href="~/Content/fonts/google-fonts.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css/simple-line-icons.css" rel="stylesheet" />
+
+    <!-- Theme css-->
+    <link href="~/Content/css/icofont.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/main.css" rel="stylesheet" />
+    <link href="~/Content/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/css/color-1.min.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <style>
+        .required {
+            color: red !important;
+        }
+    </style>
+    <style>
+        .modal-content {
+            width: 600px !important;
+            margin: 30px auto !important;
+        }
+    </style>
+</head>
+<body class="sidebar-mini fixed">
+
+    <!-- Top-Navbar-->
+    @Html.Partial("_TopHeader")
+    <!-- Sidebar chat -->
+    @Html.Partial("_chatpanel")
+
+    <div class="wrapper">
+        <div class="loader-bg">
+            <div class="loader-bar">
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <!-- Container-fluid starts -->
+            <div class="container-fluid">
+                <div class="wrapper border-bottom page-heading">
+                    <br />
+                    <div class="col-lg-12">
+                        <h2>@ViewBag.Title</h2>
+                        <ol class="breadcrum2b">
+
+                            @if ((ViewContext.RouteData.Values["action"].ToString().ToLower().Equals("index") && ViewContext.RouteData.Values["controller"].ToString().ToLower().Equals("home")))
+                            {
+                                <li>@*<i class="fa fa-home fa-lg"></i>*@ Home</li>
+                            }
+                            else
+                            {
+                                @Html.MvcSiteMap().SiteMapPath()
+                            }
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Main content starts -->
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.Partial("_chatPartial")
+                    </div>
+                    <div class="col-md-8">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div>
+                    <p class="text-center">&copy; @DateTime.Now.Year - <b>Sports Management</b></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+    <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+
+
+    <script src="~/Content/js/jquery-2.1.3.min.js"></script>
+    <script src="~/Content/js/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="~/Content/js/tether.min.js"></script>
+    <script src="~/Content/js/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/js/waves.min.js"></script>
+    <script src="~/Content/js/bootstrap-growl.min.js"></script>
+    <script src="~/Content/js/main.js"></script>
+    @*<script src="~/Content/js/moment.min.js"></script>
+    <script src="~/Content/js/bootstrap-datetimepicker.min.js"></script>*@
+    
+    <script>
+        $('form').submit(function () {
+            $('input:submit', this).click(function () {
+                return false;
+            });
+            $('button:submit', this).click(function () {
+                return false;
+            });
+        });
+
+        $(function () {
+            // Initialize numeric spinner input boxes
+            //$(".numeric-spinner").spinedit();
+            // Initialize modal dialog
+            // attach modal-container bootstrap attributes to links with .modal-link class.
+            // when a link is clicked with these attributes, bootstrap will display the href content in a modal dialog.
+            $('body').on('click', '.modal-link', function (e) {
+                e.preventDefault();
+                $(this).attr('data-target', '#modal-container');
+                $(this).attr('data-toggle', 'modal');
+            });
+            // Attach listener to .modal-close-btn's so that when the button is pressed the modal dialog disappears
+            $('body').on('click', '.modal-close-btn', function () {
+                $('#modal-container').modal('hide');
+            });
+            //clear modal cache, so that new content can be loaded
+            $('#modal-container').on('hidden.bs.modal', function () {
+                $(this).removeData('bs.modal');
+            });
+            $('#CancelModal').on('click', function () {
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

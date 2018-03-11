@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Venues>
+
+@{
+    ViewBag.Title = "Venues";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+
+    <div class="card">
+        <div class="card-header m-b-md">
+            <h5 class="card-header-text">Venues List</h5>
+            @if (WebApp.HelperClass.Common.CurrentUser.IsSuperAdmin)
+            {
+                <a href="/Venue/Detail" class="btn btn-sm btn-primary pull-right"><i class="fa fa-plus"></i> Add Venue</a>
+            }
+        </div>
+        <div class="card-block">
+            @if (Model != null && Model.Count() > 0)
+            {
+                <table class="table table-hover snap-primary-table">
+                    <thead>
+                        <tr>
+                            <th>Venue Name</th>
+                            <th>Address</th>
+                            @if (WebApp.HelperClass.Common.CurrentUser.IsSuperAdmin)
+                            {
+                                <th>Actions</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            @Html.HiddenFor(model => item.VenueId)
+                            <tr>
+                                <td>@item.VenueName</td>
+                                <td>@item.Address</td>
+                                @if (WebApp.HelperClass.Common.CurrentUser.IsSuperAdmin)
+                                {
+                                    <td>
+                                        <a class="grid_action" href="@Url.Action("Detail", "Venue", new { id = item.VenueId })" title="Edit"><i class="fa fa-edit"></i> </a>|
+                                        <a class="grid_action" href="@Url.Action("Delete", "Venue", new { id = item.VenueId })" onclick="return confirm('Are you sure you want to delete?');"
+                                           title="Delete"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>

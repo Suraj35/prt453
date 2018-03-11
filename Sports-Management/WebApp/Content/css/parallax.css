@@ -1,0 +1,118 @@
+﻿ /* -------------------------------
+     ---------parallax scene effect */
+  body {
+            margin: 0;
+        }
+
+        .parallax img {
+            display: block;
+            width: 100%;
+        }
+
+        .parallax .container {
+            position: relative;
+            margin: 0 auto;
+            /* padding: 5%;*/
+            text-align: center;
+        }
+
+        .parallax .scene {
+            padding: 0;
+            margin: 0;
+        }
+
+        .parallax .fill {
+            position: absolute;
+        }
+
+        .parallax .expand-width {
+            width: 100%;
+        }
+
+        .parallax .aspect {
+            opacity: 0.2;
+        }
+
+        .parallax .layer:nth-child(1) {
+            opacity: 1;
+        }
+
+        .parallax .layer:nth-child(2) {
+            opacity: 0.30;
+        }
+
+        .parallax .layer:nth-child(3) {
+            opacity: 0.45;
+        }
+
+        .parallax .layer:nth-child(4) {
+            opacity: 0.60;
+        }
+
+        .bluesky {
+            background-image: url(../img/background.jpg);
+            background-repeat: no-repeat;
+            bottom: 0px;
+            background-size: cover;
+            position: absolute;
+            width: 110%;
+            left: -5%;
+            top: -5%;
+            background-position:center;
+        }
+
+        .wrapper1 {
+            position: absolute;
+            overflow: hidden;
+            display: table;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        .parallax ul {
+            max-width: 1920px;
+            width: 100%;
+            height: 1024px;
+            background-size: cover;
+            transform: translate3d(0px, 0px, 0px);
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+        }
+
+        .parallax .scene {
+            min-height: 460px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .parallax .layer1 {
+            height: 100%;
+            width: 100%;
+            padding: 0px;
+            margin: 0px;
+            display: block;
+        }
+
+        .parallax .layer2 {
+            margin-top: 190px;
+        }
+        #container {
+            width:auto!important;
+            margin:0px !important;
+            padding:0px !important;
+        }
+        .logo-name img {
+            width: 160px;
+            height: auto;
+            margin: 0 auto;
+            margin-bottom: 25px;
+        }
+        .loginscreen.middle-box {
+            margin-right: 60px;
+            width: 315px;
+            padding: 15px;
+            background-color: RGBA(255,255,255,.5);
+            box-sizing:border-box;
+        }

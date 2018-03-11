@@ -1,0 +1,128 @@
+﻿@model EventsViewModels
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header m-b-md">
+            <h5 class="card-header-text">Add Event</h5>
+        </div>
+        <div class="card-block">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.EventId)
+                @Html.HiddenFor(model => model.UserId)
+                @Html.HiddenFor(model => model.DateCreated)
+                @Html.HiddenFor(model => model.IsActive)
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger " })
+                @Html.ValidationMessageFor(model => model.SportId, "", new { @class = "text-danger " })
+                @Html.ValidationMessageFor(model => model.VenueId, "", new { @class = "text-danger " })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger " })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger " })
+                @Html.ValidationMessageFor(model => model.TotalTickets, "", new { @class = "text-danger " })
+                <span id="spntt" class="text-danger" style="display:none;">Please provide Total Tickets if event is not free.</span>
+
+                <div class="col-md-12 col-md-offset-1">
+                    <div class="row">
+                        <div class="col-md-4 clear-both">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control" } })
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-4 clear-both">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control date" } })
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-4 clear-both">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control date" } })
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-4 clear-both">
+                            <div class="form-group">
+                                @Html.Label("Sport", htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.SportId, new SelectList(Model.SportsList, "SportId", "SportName"), "-- Select Sport --", new { @class = "form-control" })
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-4 clear-both">
+                            <div class="form-group">
+                                @Html.Label("Venue", htmlAttributes: new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.VenueId, new SelectList(Model.VenueList, "VenueId", "VenueName"), "-- Select Venue --", new { @class = "form-control" })
+                               
+                            </div>
+                        </div>
+
+                        <div id="divTotalTickets" class="col-md-4 clear-both" style="display:none;">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.TotalTickets, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(m => m.TotalTickets, new { htmlAttributes = new { @ID="totaltickets", @class = "form-control" } })
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 clear-both">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.IsFree, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(m => m.IsFree, new { htmlAttributes = new { @ID = "chkIsFree", @class = "custom-control custom-checkbox" } })
+                            </div>
+                        </div>
+
+                       
+                    </div>
+                </div>
+                <div class="form-btns col-md-12">
+                    <div class="tabs-buttons m-t-lg">
+                        <button type="submit" value="Save" class="btn btn-primary btn-sm" onclick="return submit_click();">Save</button>
+                        <a href="/Events/Index" class="btn btn-sm btn-white">Cancel</a>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/js/moment.min.js"></script>
+<script src="~/Content/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+    $.noConflict();
+
+    $(function () { // will trigger when the document is ready
+        $('.date').datetimepicker(); //Initialise any date pickers
+        document.getElementById("chkIsFree").checked = true;
+    });
+    $('#chkIsFree').on('change', function () {
+        if ($('#chkIsFree:checked').length > 0) {
+            $('#divTotalTickets').hide();
+        }
+        else {
+            $('#divTotalTickets').show();
+        }
+    });
+
+
+    function submit_click() {
+        if ($('#chkIsFree:checked').length == 0) {
+            if ($('#totaltickets').val() == "" || $('#totaltickets').val().trim() == 0) {
+                $('#spntt').show();
+                return false;
+            }
+            else {
+                $('#spntt').hide();
+            }
+        }
+    }
+</script>

@@ -1,0 +1,44 @@
+﻿
+@model Sports
+@{
+    ViewBag.Title = "Sports Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header m-b-md">
+            <h5 class="card-header-text">Add Event</h5>
+        </div>
+        <div class="card-block">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.SportId)
+                @Html.HiddenFor(model => model.IsActive)
+                @Html.HiddenFor(model => model.DateCreated)
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="col-md-12 col-md-offset-1">
+                    <div class="row">
+                        <div class="col-md-4 clear-both">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SportName, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.SportName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.SportName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-btns col-md-12">
+                    <div class="tabs-buttons m-t-lg">
+                        <input type="submit" value="Save" class="btn btn-primary btn-sm" />
+                        <a href="/Sports/Index" class="btn btn-sm btn-white">Cancel</a>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

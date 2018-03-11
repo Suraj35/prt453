@@ -1,0 +1,94 @@
+﻿@model EasyWash.Models.Users
+
+@{
+    Layout = null;
+    ViewBag.Title = "WelcomeEmail";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body style="margin: 10px; background:#f2f2f2; padding:10px;">
+    <table width="600" border="0" cellspacing="0" cellpadding="0" align="center" style="margin-bottom:15px; margin-top:15px;">
+        <tr>
+            <td height="80" valign="middle" style="padding-left: 5px;">
+                <img src="http://gamificationservice.techsolutions.net/Content/img/gamification.png" width="411" height="68" alt="Logo" title="Logo" style="border:0px !important;" />
+            </td>
+        </tr>
+
+
+        <tr>
+            <td bgcolor="#ffffff" style="border: 1px solid #e5e5e5; padding: 15px;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+
+                            <td align="top">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <tr>
+                                            <td height="30" valign="top" align="left" style="font-family: arial; font-size: 18px; color: #1ab394;">Welcome to Gamification Service!</td>
+                                        </tr>
+                                        <tr>
+                                            <td height="30" valign="middle" align="left" style="font-family:arial; font-size:13px; color: #676a6c;">Dear <strong>@Model.Name</strong>,</td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="middle" align="left" style="font-family:arial; font-size:12px; color: #676a6c; line-height: 17px;">Welcome! We are glad to have you as our new Customer. <br>We are truly thankful that you have chosen our Gamification Engine.</td>
+                                        </tr>
+                                        <tr>
+                                            <td height="25" style="border-bottom: 1px solid #E0E0E0;">&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <!-- details -->
+                        <tr>
+                            <td valign="top" style="padding-top:5px;">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <tr>
+                                            <td height="30" valign="middle" align="left" style="font-family:arial; font-size:14px; color:#333333;"> <strong>Getting Started</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td height="30" valign="middle" align="left" style="font-family:arial; font-size:12px; color:#444444; line-height: 17px;">  <a style="text-decoration: underline !important; font-weight: bold; color: #1ab394 !important;" href="@Url.Action("Login", "Account", null, Request.Url.Scheme)">Click here</a> to logon the system with the following credentials. </td>
+                                        </tr>
+                                        <tr>
+                                            <td height="30" valign="middle" align="left" style="font-family:arial; font-size:12px; color:#333333;">
+
+                                                Your username is: <span style="text-decoration: none !important; font-weight: bold; color: #1ab394 !important;">@Model.UserName</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td height="30" valign="middle" align="left" style="font-family:arial; font-size:12px; color:#333333;">
+                                                Your password is:  <span style="text-decoration: none !important; font-weight: bold; color: #1ab394 !important;">@Model.TempPassword</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td height="25" style="border-bottom: 1px solid #E0E0E0;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td valign="middle" align="left" style="font-family:arial; font-size:12px; color:#444444;padding-top:20px; line-height:22px">
+                                Regards,<br />
+                                <strong>Gamification Service Team</strong>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+</body>
+</html>
+
+
