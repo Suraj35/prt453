@@ -13,11 +13,27 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
-    public class TicketsController : BaseController
+    class TicketsController : BaseController
     {
         Result<int> saveResult = new Result<int>();
         ITicketsService _ticketsService;
         private readonly IUnitOfWorkAsync _unitOfWork;
+
+        public override void AddErrors(List<string> errors, string message)
+        {
+            if (errors == null || errors.Count == 0)
+            {
+                ModelState.AddModelError("", message);
+            }
+            else
+            {
+                foreach (string s in errors)
+                {
+                    ModelState.AddModelError("", s);
+                }
+            }
+
+        }
 
         public TicketsController(ITicketsService ticketsService, IUnitOfWorkAsync unitOfWork)
         {
