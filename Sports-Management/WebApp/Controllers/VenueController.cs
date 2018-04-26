@@ -12,15 +12,19 @@ using WebApp.Services;
 
 namespace WebApp.Controllers
 {
-    public class VenueController : BaseController
+    abstract class VenueController : BasicController
     {
         Result<int> saveResult = new Result<int>();
         IVenueService _venueService;
         private readonly IUnitOfWorkAsync _unitOfWork;
-        public VenueController(IVenueService venueService, IUnitOfWorkAsync unitOfWork)
+        public VenueController(IVenueService venueService, IUnitOfWorkAsync unitOfWork):base()
         {
             _venueService = venueService;
             _unitOfWork = unitOfWork;
+        }
+        public override BasicController Clone()
+        {
+            return (BasicController)this.MemberwiseClone();
         }
         // GET: Venue
         public ActionResult Index()
