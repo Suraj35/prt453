@@ -45,14 +45,32 @@ namespace WebApp.ViewModels
     {
         [Required]
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public virtual string Email { get; set; }
     }
 
-    public class LoginViewModel
+    public class ForgotPasswordViewModel
     {
+        [EmailAddress]
+        public string ModelEmail { get; set; }
+        public string Name { get; set; }
+        [Required(ErrorMessage = "Username is required.")]
+        [Display(Name = "User Name")]
+        public string Username { get; set; }
+        public string Url { get; set; }
+        public string UserName { get; set; }
+    }
+
+    public class LoginViewModel: ForgotViewModel
+    {
+        public  ForgotPasswordViewModel modelpassword = new ForgotPasswordViewModel();
 
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public override string Email
+        {
+            get;
+            set;
+        }
+
         [Required]
         [Display(Name = "UserName")]
         public string UserName { get; set; }
@@ -64,10 +82,12 @@ namespace WebApp.ViewModels
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
     }
 
-    public class RegisterViewModel
+    public class RegisterViewModel : ForgotViewModel
     {
+        public ForgotPasswordViewModel modelpassword = new ForgotPasswordViewModel();
         public long Id { get; set; }
         [Required(ErrorMessage = "User Name is required.")]
         [RegularExpression("^[a-zA-Z0-9_]*$", ErrorMessage = "Only alphanumeric and underscores are allowed in User Name field.")]
@@ -80,7 +100,7 @@ namespace WebApp.ViewModels
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public override string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -133,15 +153,5 @@ namespace WebApp.ViewModels
         public string Code { get; set; }
     }
 
-    public class ForgotPasswordViewModel
-    {
-        [EmailAddress]
-        public string Email { get; set; }
-        public string Name { get; set; }
-        [Required(ErrorMessage = "Username is required.")]
-        [Display(Name = "User Name")]
-        public string Username { get; set; }
-        public string Url { get; set; }
-        public string UserName { get; set; }
-    }
+
 }
