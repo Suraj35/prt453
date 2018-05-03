@@ -17,8 +17,32 @@ using WebApp.ViewModels;
 
 namespace WebApp.Identity
 {
-    public class UsersManager
+    //Main Factory Class and it abstract class
+    abstract class FactoryUser
     {
+    }
+    //The Concrete user class according to pattern
+    class GeneralUsers : FactoryUser
+    {
+    }
+    // the creator abstract according to Factory Pattern
+    abstract class UserCreator
+    {
+        public abstract FactoryUser FactoryMethod();
+        public abstract List<Users> GetAllUsers();
+        public abstract Result<Users> FindById(long Id);
+        public abstract Result<long> UpdateUser(Users _user);
+        public abstract Result<long> Delete(long userId);
+
+
+    }
+
+    class UsersManager : UserCreator
+    {
+        public override FactoryUser FactoryMethod()
+        {
+            return new GeneralUsers();
+        }
 
         private readonly IOwinContext _iOwinContext = HttpContext.Current.GetOwinContext();
         UserStoreService userStoreService;
@@ -41,7 +65,7 @@ namespace WebApp.Identity
             userStoreService = new UserStoreService();
         }
 
-        public Result<Users> FindById(long Id)
+        public override Result<Users> FindById(long Id)
         {
             Result<Users> result = new Result<Users>();
             Users user = AppUserManager.FindById(Id);
@@ -59,7 +83,7 @@ namespace WebApp.Identity
         }
 
 
-        public Result<long> UpdateUser(Users _user)
+        public override Result<long> UpdateUser(Users _user)
         {
             Result<long> result = new Result<long>();
             try
@@ -82,7 +106,7 @@ namespace WebApp.Identity
             }
             return result;
         }
-        public Result<long> Delete(long userId)
+        public override Result<long> Delete(long userId)
         {
             Result<long> result = new Result<long>();
             result = userStoreService.Delete(userId);
@@ -100,13 +124,7 @@ namespace WebApp.Identity
         public Result<long> CreateUser(Users newUser, ControllerBase controllerBase)
         {
             Result<long> result = new Result<long>();
-
-            // result=userStoreService.FindUserByName(newUser.UserName);
-
-            //newUser.created_by = int.Parse(HttpContext.Current.User.Identity.GetUserId());// == null ? 1 : int.Parse(HttpContext.Current.User.Identity.GetUserId());
             newUser.DateCreated = DateTime.Now;
-            //newUser.TempPassword = RandomPassword.Generate();
-            //newUser.Password = newUser.TempPassword;
             newUser.IsActive = true;
             var returnVal = AppUserManager.Create(newUser, newUser.Password);
             if (returnVal.Succeeded)
@@ -131,13 +149,9 @@ namespace WebApp.Identity
         public Result<long> CreateAdminUser(Users newUser)
         {
             Result<long> result = new Result<long>();
-
-            // result=userStoreService.FindUserByName(newUser.UserName);
-
-            //newUser.created_by = int.Parse(HttpContext.Current.User.Identity.GetUserId());// == null ? 1 : int.Parse(HttpContext.Current.User.Identity.GetUserId());
+           
             newUser.DateCreated = DateTime.Now;
-            //newUser.TempPassword = RandomPassword.Generate();
-            //newUser.Password = newUser.TempPassword;
+
             newUser.IsActive = true;
             var returnVal = AppUserManager.Create(newUser, newUser.Password);
             if (returnVal.Succeeded)
@@ -178,7 +192,7 @@ namespace WebApp.Identity
             return result.data;
         }
 
-        public List<Users> GetAllUsers()
+        public override List<Users> GetAllUsers()
         {
             Result<List<Users>> result = userStoreService.GetAllUsers();
             if (result.data == null)
@@ -305,8 +319,7 @@ namespace WebApp.Identity
                 info.Name = user.Name;
                 info.Url = callbackUrl;
                 info.UserName = user.UserName;
-
-                info.Email = user.Email;
+                info.Email= user.Email;
 
                 string defaultPath = "~/Views/Templates/Default/ForgotPassword.cshtml";
 
