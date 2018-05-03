@@ -11,13 +11,18 @@ using WebApp.Helpers;
 
 namespace WebApp.Controllers
 {
-    
+
     public class UserController : BaseController
     {
+        private List<string> _users = new List<string>();
         UsersManager _usermanager;
         public UserController()
         {
             _usermanager = new UsersManager();
+        }
+        public void Usertype(string type)
+        {
+            _users.Add(type);
         }
         [SuperAdminAuthorizeAttribute]
         public ActionResult Index()
@@ -89,5 +94,31 @@ namespace WebApp.Controllers
             var result = _usermanager.Activate(id);
             return RedirectToAction("Index");
         }
+    }
+
+        abstract class UserType : UserController
+    {
+        public abstract void TeamCaptain();
+        public abstract void Admin();
+        public abstract UserController Usertype();
+
+    }
+
+    class ConcreteUser1 : UserType
+    {
+        private UserController _NewUser = new UserController();
+        public override void TeamCaptain()
+        {
+            _NewUser.Usertype("TeamCaptain");
+        }
+        public override void Admin()
+        {
+            _NewUser.Usertype("Admin");
+        }
+        public override UserController Usertype()
+        {
+            return _NewUser;
+        }
+
     }
 }
