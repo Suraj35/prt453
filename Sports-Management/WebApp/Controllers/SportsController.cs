@@ -12,6 +12,32 @@ using WebApp.Services;
 
 namespace WebApp.Controllers
 {
+public class   SportsController{
+
+   //create an object of SingleObject
+   private static  SportsController instance = new  SportsController();
+
+   //make the constructor private so that this class cannot be
+   //instantiated
+   private  SportsController(){}
+
+   //Get the only object available
+   public static  SportsController getInstance(){
+      return instance;
+   }
+
+    public ActionResult Index()
+        {
+            IEnumerable<Sports> model = new List<Sports>();
+            model = _sportsService.Queryable().data;
+            return View(model);
+        }
+}
+
+
+
+
+
     public class SportsController : BaseController
     {
 
