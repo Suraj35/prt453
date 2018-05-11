@@ -16,7 +16,26 @@ using PagedList;
 
 namespace WebApp.Controllers
 {
-    public class EventsController : BaseController
+    abstract class EventHandler
+    {
+        public abstract Event EventManager();
+    }
+    abstract class Event
+    {
+        public abstract ActionResult ChallengeUsers(int a);
+        public abstract ActionResult Detail(int a);
+    }
+
+    class EventIterator : EventHandler
+    {
+
+        public override Event EventManager()
+        {
+            return null;
+        }
+    }
+
+    class EventsController : Event
     {
         Result<int> saveResult = new Result<int>();
         IEventsService _eventService;
@@ -26,6 +45,8 @@ namespace WebApp.Controllers
         IUserChallengesService _challengeService;
         private readonly IUnitOfWorkAsync _unitOfWork;
         private const int pageSize = 5;
+       
+
         public EventsController(IEventsService eventService, INotificationsService notificationsService, ISportsService sportsService, IUserChallengesService challengeService, IVenueService venueService, IUnitOfWorkAsync unitOfWork)
         {
             _eventService = eventService;
@@ -61,7 +82,7 @@ namespace WebApp.Controllers
         }
 
 
-        public ActionResult Detail(int id = 0)
+        public override ActionResult Detail(int id = 0)
         {
             EventsViewModels model = new EventsViewModels();
             if (id > 0)
@@ -125,7 +146,7 @@ namespace WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult ChallengeUsers(int id = 0)
+        public override ActionResult ChallengeUsers(int id = 0)
         {
             //return PartialView("_challenge");
             //eventid
@@ -240,4 +261,5 @@ namespace WebApp.Controllers
             return RedirectToAction("Index");
         }
     }
+
 }
