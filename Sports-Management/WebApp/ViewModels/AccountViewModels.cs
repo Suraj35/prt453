@@ -5,6 +5,36 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.ViewModels
 {
+    abstract class AbstractEmail
+    {
+        public abstract EmailGetter GetEmail();
+        public abstract EmailSetter SetEmail();
+        
+
+    }
+    abstract class EmailGetter { }
+
+    abstract class EmailSetter { }
+
+    
+
+     class ForgotViewModel : AbstractEmail
+    {
+        [Required]
+        [Display(Name = "Email")]
+        public virtual string Email { get; set; }
+
+        public override EmailGetter GetEmail()
+        {
+            throw new NotImplementedException();
+        }
+        public override EmailSetter SetEmail()
+        {
+            throw new NotImplementedException();
+        }
+
+    }
+
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
@@ -41,12 +71,8 @@ namespace WebApp.ViewModels
         public bool RememberMe { get; set; }
     }
 
-    public class ForgotViewModel
-    {
-        [Required]
-        [Display(Name = "Email")]
-        public virtual string Email { get; set; }
-    }
+ 
+
 
     public class ForgotPasswordViewModel
     {
@@ -58,9 +84,10 @@ namespace WebApp.ViewModels
         public string Username { get; set; }
         public string Url { get; set; }
         public string UserName { get; set; }
+        public string Email { get; set; }
     }
 
-    public class LoginViewModel: ForgotViewModel
+     class LoginViewModel: ForgotViewModel
     {
         public  ForgotPasswordViewModel modelpassword = new ForgotPasswordViewModel();
 
@@ -85,7 +112,7 @@ namespace WebApp.ViewModels
 
     }
 
-    public class RegisterViewModel : ForgotViewModel
+     class RegisterViewModel : ForgotViewModel
     {
         public ForgotPasswordViewModel modelpassword = new ForgotPasswordViewModel();
         public long Id { get; set; }
